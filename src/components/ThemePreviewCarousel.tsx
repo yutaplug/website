@@ -80,7 +80,7 @@ export function ThemePreviewCarousel() {
         >
           <div className="relative flex items-center w-full">
             <Carousel setApi={setApi} opts={{ loop: true, align: "start" }} className="w-full">
-              <CarouselPrevious className="-left-16 md:-left-24 absolute z-10 bg-card/90 border-border hover:bg-card" />
+              <CarouselPrevious className="-left-6 md:-left-10 absolute z-10 bg-card/90 border-border hover:bg-card" />
               <CarouselContent>
                 {THEME_PREVIEWS.map((preview) => (
                   <CarouselItem key={preview.src} className="md:basis-1/2 lg:basis-1/3">
@@ -89,13 +89,13 @@ export function ThemePreviewCarousel() {
                         src={preview.src}
                         alt={preview.name}
                         loading="lazy"
-                        className="w-full h-full aspect-[16/9] object-cover object-center transition-transform duration-500 hover:scale-[1.02] rounded-[2rem]"
+                        className="w-full h-full aspect-[16/9] object-cover object-center transition-transform duration-500 hover:scale-[1.02] rounded-lg"
                       />
                     </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselNext className="-right-16 md:-right-24 absolute z-10 bg-card/90 border-border hover:bg-card" />
+              <CarouselNext className="-right-6 md:-right-10 absolute z-10 bg-card/90 border-border hover:bg-card" />
             </Carousel>
           </div>
 
