@@ -109,8 +109,9 @@ export function ThemePreviewCarousel() {
                   className={
                     index === current
                       ? "h-2.5 w-7 rounded-full bg-primary transition-all"
-                      : "h-2.5 w-2.5 rounded-full bg-muted-foreground/50 hover:bg-muted-foreground/70 transition-all"
+                      : "h-2.5 w-2.5 rounded-full bg-gray-400/80 border border-gray-500 shadow-sm transition-all"
                   }
+                  style={index !== current ? { opacity: 1 } : {}}
                 />
               ))}
             </div>
