@@ -78,26 +78,26 @@ export function ThemePreviewCarousel() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="px-10 md:px-14"
         >
-          <Carousel setApi={setApi} opts={{ loop: true, align: "start" }} className="w-full">
-            <CarouselContent>
-              {THEME_PREVIEWS.map((preview) => (
-                <CarouselItem key={preview.src} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="material-card p-0 overflow-hidden h-full">
-                    <div className="relative w-full aspect-[16/9] rounded-[2rem] overflow-hidden border border-border/70 bg-card/40">
+          <div className="relative flex items-center w-full">
+            <CarouselPrevious className="-left-16 md:-left-24 absolute z-10 bg-card/90 border-border hover:bg-card" />
+            <Carousel setApi={setApi} opts={{ loop: true, align: "start" }} className="w-full">
+              <CarouselContent>
+                {THEME_PREVIEWS.map((preview) => (
+                  <CarouselItem key={preview.src} className="md:basis-1/2 lg:basis-1/3">
+                    <div className="material-card p-0 overflow-hidden h-full flex items-stretch">
                       <img
                         src={preview.src}
                         alt={preview.name}
                         loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 hover:scale-[1.02]"
+                        className="w-full h-full aspect-[16/9] object-cover object-center transition-transform duration-500 hover:scale-[1.02] rounded-[2rem]"
                       />
                     </div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="left-0 md:-left-2 bg-card/90 border-border hover:bg-card" />
-            <CarouselNext className="right-0 md:-right-2 bg-card/90 border-border hover:bg-card" />
-          </Carousel>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+            <CarouselNext className="-right-16 md:-right-24 absolute z-10 bg-card/90 border-border hover:bg-card" />
+          </div>
 
           {count > 0 && (
             <div className="mt-6 flex items-center justify-center gap-2">
