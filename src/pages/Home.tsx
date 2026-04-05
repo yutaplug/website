@@ -2,6 +2,7 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { FeatureGrid } from "@/components/FeatureGrid";
 import { Footer } from "@/components/Footer";
+import { ThemePreviewCarousel } from "@/components/ThemePreviewCarousel";
 import { STATS } from "@/lib/constants";
 import { motion } from "framer-motion";
 
@@ -34,6 +35,7 @@ export default function Home() {
         </section>
 
         <FeatureGrid />
+  <ThemePreviewCarousel />
         
         {/* Discord Server Banner Section */}
         <section className="py-24 px-4 relative overflow-hidden bg-transparent">
