@@ -1,4 +1,4 @@
-**How to use CustomSounds, StartupSound and NoticeSound plugins**
+**How to use "sound" plugins**
 
 **GitHub:**
   - Create a GitHub account
@@ -14,4 +14,5 @@
   - Click the 3 dots next to it & press Copy Path
   - Go to the plugin settings & paste it
   - Add file:// at the start
-  - Final result should be file:///storage/emulated/0/Example/Example.mp3
+
+Final result should be file:///storage/emulated/0/Example/Example.mp3
