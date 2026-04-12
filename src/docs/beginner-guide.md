@@ -1,6 +1,6 @@
 ## How to install plugins
 
-**📌 IF YOU DON'T HAVE THE OPTION TO INSTALL PLUGINS, READ THE PINNED MESSAGE IN #SUPPORT CHANNEL 📌**
+**IF YOU DON'T HAVE THE OPTION TO INSTALL PLUGINS, READ THE PINNED MESSAGE IN #SUPPORT CHANNEL**
 
 1. Join the [Aliucord Discord server](https://discord.gg/EsNDvBaHVU)
 2. Make sure you are using the Aliucord app
@@ -13,6 +13,8 @@
 - The PluginWeb plugin is recommended if you want a built-in plugin list.
 
 ## How to install themes
+
+**IF THE THEME YOU ARE USING DOESN'T WORK FOR YOU: EITHER YOU ARE NOT USING THE RIGHT TRANSPARENCY MODE, YOU ARE NOT USING THE THEME MIRROR FROM #THEME-SUPPORT PINS, OR SADLY THEMER IS BROKEN ON YOUR END AND THERE'S NOTHING YOU CAN DO (CAN HAPPEN DEPENDING ON THE DEVICE)**
 
 1. Join the [Aliucord Discord server](https://discord.gg/EsNDvBaHVU)
 2. Make sure you are using the Aliucord app
