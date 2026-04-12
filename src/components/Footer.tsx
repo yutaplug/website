@@ -6,41 +6,39 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-transparent border-t-2 border-border py-24 px-4 overflow-hidden relative flex flex-col items-center">
-      <div className="container relative z-10 max-w-5xl flex flex-col items-center">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-16 text-center md:text-left justify-items-center md:justify-items-start w-full">
-          <div className="md:col-span-2 flex flex-col items-center md:items-start text-center md:text-left">
-            <Link href="/" className="flex items-center gap-4 mb-8 group w-fit">
-              <AliucordLogo className="w-12 h-12 text-primary group-hover:rotate-12 transition-transform duration-300" animated />
-              <span className="font-black text-3xl tracking-tighter">Aliucord</span>
-            </Link>
-            <p className="text-xl text-muted-foreground max-w-sm font-medium leading-relaxed">
-              A mod for the Discord Android App
-            </p>
-          </div>
-          
-          <div className="flex flex-col items-center md:items-start">
-            <h4 className="font-black text-sm tracking-widest mb-8 text-primary/80">Resources</h4>
-            <ul className="space-y-4 text-center md:text-left">
-              <li>
-                <a href="https://github.com/Aliucord/documentation" target="_blank" rel="noreferrer" className="text-lg font-bold text-muted-foreground hover:text-primary transition-colors">Documentation</a>
-              </li>
-              <li>
-                <a href="https://github.com/Aliucord/Aliucord" target="_blank" rel="noreferrer" className="text-lg font-bold text-muted-foreground hover:text-primary transition-colors">GitHub</a>
-              </li>
-              <li>
-                <Link href="/faq" className="text-lg font-bold text-muted-foreground hover:text-primary transition-colors">FAQ</Link>
-              </li>
-            </ul>
+    <footer className="bg-transparent py-24 px-4 overflow-hidden relative flex flex-col items-start w-full">
+      <m3e-divider />
+      <div className="w-full">
+        <div className="max-w-5xl mx-auto flex flex-col justify-center" style={{ minHeight: '180px' }}>
+          <div className="flex flex-col md:flex-row items-center justify-between w-full gap-8" style={{ minHeight: '120px' }}>
+            <div className="flex flex-col items-center md:items-start text-center md:text-left">
+              <Link href="/" className="flex items-center gap-4 mb-6 group w-fit mx-auto md:mx-0">
+                <AliucordLogo className="w-12 h-12 text-primary group-hover:rotate-12 transition-transform duration-300" animated />
+                <span className="font-normal text-3xl tracking-tighter" style={{ fontSize: '2rem', fontFamily: 'Roboto, ui-sans-serif, system-ui' }}>Aliucord</span>
+              </Link>
+              <p className="text-base text-muted-foreground max-w-sm font-medium leading-relaxed" style={{ fontSize: '1rem', fontFamily: 'Roboto, ui-sans-serif, system-ui' }}>
+                A mod for the legacy Discord Android App
+              </p>
+            </div>
+            <m3e-button-group aria-label="Footer links" size="medium" variant="connected">
+              <m3e-button as="a" href="https://github.com/Aliucord/documentation" target="_blank" variant="tonal" style={{ fontFamily: 'Roboto, ui-sans-serif, system-ui', fontSize: '1rem', minWidth: 0 }}>
+                Documentation
+              </m3e-button>
+              <m3e-button as="a" href="https://github.com/Aliucord/Aliucord" target="_blank" variant="tonal" style={{ fontFamily: 'Roboto, ui-sans-serif, system-ui', fontSize: '1rem', minWidth: 0, marginLeft: '0.5rem' }}>
+                GitHub
+              </m3e-button>
+              <m3e-button as="a" href="https://discord.gg/EsNDvBaHVU" target="_blank" variant="tonal" style={{ fontFamily: 'Roboto, ui-sans-serif, system-ui', fontSize: '1rem', minWidth: 0, marginLeft: '0.5rem' }}>
+                Support Server
+              </m3e-button>
+            </m3e-button-group>
           </div>
         </div>
-        
-        <div className="pt-12 border-t-2 border-border flex flex-col md:flex-row justify-between items-center gap-6 w-full">
-          <p className="text-muted-foreground font-bold">
-            &copy; {currentYear} Aliucord Contributors. Not affiliated with Discord Inc.
-          </p>
-          <div className="flex gap-8 text-sm font-black tracking-widest text-muted-foreground">
-            <a href="https://discord.gg/EsNDvBaHVU" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">Support Server</a>
+        <div className="pt-12 w-full">
+          <m3e-divider />
+          <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 w-full min-h-[3.5rem]">
+            <p className="text-muted-foreground font-normal text-center w-full md:w-auto" style={{ lineHeight: '2.25rem', margin: 0 }}>
+              &copy; {currentYear} Aliucord Contributors. Not affiliated with Discord Inc.
+            </p>
           </div>
         </div>
       </div>

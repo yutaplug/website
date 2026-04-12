@@ -3,21 +3,10 @@ import { useState, useEffect } from "react";
 import { AliucordLogo } from "./AliucordLogo";
 import { NAV_LINKS } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "./ThemeToggle";
+import MaterialIcon from "@/components/MaterialIcon";
+import { M3eIconButton } from "@m3e/react/icon-button";
+import { M3eNavBar, M3eNavItem } from "@m3e/react/nav-bar";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-
-const MaterialIcon = ({ name, size = 24, className = "" }: { name: string, size?: number, className?: string }) => (
-  <span 
-    className={`material-symbols-rounded ${className}`} 
-    style={{ 
-      fontSize: size, 
-      fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24",
-      userSelect: 'none'
-    }}
-  >
-    {name}
-  </span>
-);
 
 const getIconForLabel = (label: string) => {
   switch (label.toLowerCase()) {
@@ -45,76 +34,122 @@ const getMobileIconForLabel = (label: string) => {
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
 
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
 
   return (
-    <header className="fixed top-0 w-full z-50 border-none bg-background/80 backdrop-blur-xl">
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 group">
-          <AliucordLogo className="w-10 h-10 text-primary group-hover:scale-110 transition-transform" animated />
-        </Link>
-
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map((link) => (
-            link.href.startsWith('http') ? (
-              <a
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noreferrer"
-                className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
-              >
-                {getIconForLabel(link.label)}
-                {link.label}
-              </a>
-            ) : (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-sm font-bold transition-colors flex items-center gap-2 ${location === link.href ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`}
-              >
-                {getIconForLabel(link.label)}
-                {link.label}
+    <>
+      <header className="fixed top-0 w-full z-50 border-none bg-background/80 backdrop-blur-xl">
+        <M3eNavBar
+          mode="expanded"
+          className="w-full"
+          style={{
+            overflowX: 'hidden',
+            ['--_nav-item-min-width' as any]: '4.5rem',
+            ['--m3e-horizontal-nav-item-padding' as any]: '0.75rem',
+            ['--m3e-nav-item-spacing' as any]: '0.25rem'
+          }}
+        >
+          <div className="max-w-5xl w-full mx-auto flex items-center justify-between px-8 h-20">
+            <div className="flex items-center gap-3">
+              <Link href="/" className="flex items-center gap-3 group h-full">
+                <AliucordLogo className="w-10 h-10 text-primary group-hover:scale-110 transition-transform" animated />
+                <span className="ml-2 text-2xl font-semibold tracking-tight text-primary select-none" style={{ lineHeight: 1 }}>Aliucord</span>
               </Link>
-            )
-          ))}
-        </nav>
+            </div>
 
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" className="rounded-full w-12 h-12 hover:bg-accent/10">
-                <MaterialIcon name="menu" size={24} />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="bg-background border-none p-6 rounded-none bg-background/95 w-[280px] duration-100">
-              <SheetTitle className="sr-only">Menu</SheetTitle>
-              <SheetDescription className="sr-only">Navigation</SheetDescription>
-              <div className="flex flex-col gap-6 mt-12">
-                {NAV_LINKS.map((link) => (
-                  link.href.startsWith('http') ? (
-                    <a key={link.href} href={link.href} target="_blank" rel="noreferrer" className="text-lg font-medium hover:text-primary transition-colors flex items-center gap-3">
-                      {getMobileIconForLabel(link.label)}
+            <div className="flex items-center gap-3">
+              <div className="hidden md:flex items-center gap-4">
+              {NAV_LINKS.map((link) => {
+                let iconName = '';
+                switch (link.label.toLowerCase()) {
+                  case 'home': iconName = 'home'; break;
+                  case 'plugins': iconName = 'extension'; break;
+                  case 'themes': iconName = 'palette'; break;
+                  case 'faq': iconName = 'help'; break;
+                  case 'guides': iconName = 'book'; break;
+                  default: iconName = 'info'; break;
+                }
+                const icon = <span slot="icon"><MaterialIcon name={iconName} size={20} className="navbar-icon" /></span>;
+                return link.href.startsWith("http") ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <M3eNavItem className={`text-sm font-medium ${location === link.href ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`} style={{ fontSize: '1.125rem' }} onClick={() => { }}>
+                      {icon}
                       {link.label}
-                    </a>
-                  ) : (
-                    <Link key={link.href} href={link.href} className={`text-lg font-medium transition-colors flex items-center gap-3 ${location === link.href ? 'text-primary' : 'hover:text-primary'}`}>
-                      {getMobileIconForLabel(link.label)}
-                      {link.label}
-                    </Link>
-                  )
-                ))}
+                    </M3eNavItem>
+                  </a>
+                ) : (
+                  <M3eNavItem
+                    key={link.href}
+                    className={`text-sm font-medium ${location === link.href ? 'text-primary' : 'text-muted-foreground hover:text-primary'}`} style={{ fontSize: '1.125rem' }}
+                    onClick={() => setLocation(link.href)}
+                    aria-current={location === link.href ? 'page' : undefined}
+                  >
+                    {icon}
+                    {link.label}
+                  </M3eNavItem>
+                );
+              })}
               </div>
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
-    </header>
+
+              <div className="md:hidden flex items-center gap-2">
+                <M3eIconButton
+                  className="rounded-full w-12 h-12 hover:bg-accent/10 flex items-center justify-center"
+                  aria-label={isOpen ? "Close menu" : "Open menu"}
+                  onClick={() => setIsOpen((v) => !v)}
+                >
+                  <MaterialIcon name={isOpen ? "x" : "menu"} size={24} />
+                </M3eIconButton>
+              </div>
+            </div>
+          </div>
+        </M3eNavBar>
+      </header>
+
+      {isOpen && (
+        <nav
+          className="md:hidden fixed left-0 right-0 px-4 py-6 flex flex-col gap-6 animate-mobile-nav-drawer z-40 text-left"
+          style={{
+            top: '5rem',
+            background: 'var(--md-surface, #18181b)',
+            position: 'fixed',
+          }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            {NAV_LINKS.map((link) => {
+              let iconName = '';
+              switch (link.label.toLowerCase()) {
+                case 'home': iconName = 'home'; break;
+                case 'plugins': iconName = 'extension'; break;
+                case 'themes': iconName = 'palette'; break;
+                case 'faq': iconName = 'help'; break;
+                case 'guides': iconName = 'book'; break;
+                default: iconName = 'info'; break;
+              }
+              const icon = <MaterialIcon name={iconName} size={22} style={{ marginRight: 12, verticalAlign: 'middle' }} />;
+              return link.href.startsWith('http') ? (
+                <a key={link.href} href={link.href} target="_blank" rel="noreferrer" className="text-lg font-medium hover:text-primary transition-colors w-full text-left flex items-center gap-2">
+                  {icon}
+                  {link.label}
+                </a>
+              ) : (
+                <Link key={link.href} href={link.href} className={`text-lg font-medium transition-colors w-full text-left flex items-center gap-2 ${location === link.href ? 'text-primary' : 'hover:text-primary'}`}>
+                  {icon}
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
+        </nav>
+      )}
+    </>
   );
 }

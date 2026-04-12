@@ -8,7 +8,7 @@ export default function NotFound() {
       <Card className="w-full max-w-md mx-4">
         <CardContent className="pt-6 flex flex-col items-center gap-4">
           <div className="flex mb-4 gap-4">
-            <h1 className="text-2xl font-bold">This page doesn't exist.</h1>
+            <h1 className="text-2xl font-medium" style={{ fontSize: '2rem', fontFamily: 'Roboto, ui-sans-serif, system-ui' }}>This page doesn't exist.</h1>
           </div>
 
           <Button onClick={() => window.history.back()} size="sm" variant="outline" className="text-lg h-16 px-10">

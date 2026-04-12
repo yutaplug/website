@@ -1,14 +1,19 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Menu, X, Search, ChevronUp, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import MaterialIcon from "@/components/MaterialIcon";
+import "@m3e/web/search";
+
+
+import type { DocSection } from "../lib/docs";
 
 interface DocsSidebarProps {
-  sections: Array<{ title: string }>;
-  activeTab: "plugins" | "themes" | "general";
-  setActiveTab: (tab: "plugins" | "themes" | "general") => void;
+  sections: DocSection[];
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  onFinderState?: (open: boolean) => void;
 }
 
-export default function DocsSidebar({ sections, activeTab, setActiveTab }: DocsSidebarProps) {
+export default function DocsSidebar({ sections, activeTab, setActiveTab, onFinderState }: DocsSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [matches, setMatches] = useState<Range[]>([]);
@@ -138,8 +143,8 @@ export default function DocsSidebar({ sections, activeTab, setActiveTab }: DocsS
   }, [isOpen, clearHighlights]);
 
   useEffect(() => {
-    setIsOpen(false);
-  }, [activeTab]);
+    if (onFinderState) onFinderState(isOpen);
+  }, [isOpen, onFinderState]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -148,18 +153,12 @@ export default function DocsSidebar({ sections, activeTab, setActiveTab }: DocsS
     }
   };
 
-  const handleNavigate = (index: number, title: string) => {
-    const sectionId = title.toLowerCase().replace(/\s+/g, "-");
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-      window.history.pushState(null, "", `#${sectionId}`);
-      setIsOpen(false);
-    }
-  };
+
+  // Generate section id from title
+  const getSectionId = (title: string) => title.toLowerCase().replace(/\s+/g, "-");
 
   return (
-    <div className="fixed bottom-6 right-4 sm:right-8 z-[9999]">
+    <div className="fixed bottom-6 right-4 sm:right-8 z-[9999] rounded-2xl">
       <div className="flex flex-col items-end gap-2">
         <AnimatePresence>
           {isOpen && (
@@ -168,21 +167,26 @@ export default function DocsSidebar({ sections, activeTab, setActiveTab }: DocsS
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="rounded-2xl overflow-hidden shadow-2xl min-w-[220px] max-w-[280px] sm:max-w-xs border-none"
-              style={{ backgroundColor: 'var(--md-surface-container, hsl(var(--card)))' }}
+              className="rounded-2xl overflow-hidden min-w-[220px] max-w-[280px] sm:max-w-xs border-none outline outline-2 outline-[var(--md-outline,#79747E)]"
+              style={{ backgroundColor: 'var(--md-surface, #18181b)' }}
             >
               <div className="p-4">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60 px-3 mb-2">Sections</h3>
+                <h3 className="text-xs font-medium uppercase tracking-widest text-muted-foreground/60 px-3 mb-2" style={{ fontSize: '1.125rem' }}>Sections</h3>
                 <div className="max-h-48 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
-                  {sections.map((section, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleNavigate(index, section.title)}
-                      className="w-full text-left px-4 py-2 rounded-lg transition-colors text-sm hover:bg-accent/10 text-muted-foreground hover:text-foreground truncate"
-                    >
-                      {section.title}
-                    </button>
-                  ))}
+                  {sections.map((section, index) => {
+                    const sectionId = getSectionId(section.title);
+                    return (
+                      <a
+                        key={index}
+                        href={`#${sectionId}`}
+                        onClick={() => setIsOpen(false)}
+                        className={`block w-full text-left px-4 py-2 rounded-lg transition-colors text-sm truncate no-underline ${activeTab && section.title.toLowerCase().includes(activeTab) ? 'bg-accent/10 text-foreground' : 'text-muted-foreground hover:bg-accent/10 hover:text-foreground'}`}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {section.title}
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             </motion.div>
@@ -196,53 +200,52 @@ export default function DocsSidebar({ sections, activeTab, setActiveTab }: DocsS
                 initial={{ opacity: 0, width: 0 }}
                 animate={{ opacity: 1, width: "auto" }}
                 exit={{ opacity: 0, width: 0 }}
-                className="overflow-hidden"
+                className="overflow-hidden rounded-2xl"
               >
-                <div className="flex items-center rounded-lg px-3 py-2 gap-2 border-none" style={{ backgroundColor: 'hsl(var(--card))', color: 'hsl(var(--card-foreground))' }}>
-                  <Search className="w-4 h-4 text-muted-foreground" />
+                <m3e-search-bar clearable style={{ width: '220px', background: 'var(--md-surface-container)' }}>
+                  <span slot="leading"><MaterialIcon name="search" size={18} /></span>
                   <input
+                    slot="input"
                     type="text"
                     placeholder="Find in page..."
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={e => setSearchQuery(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    className="bg-transparent outline-none text-sm w-28 sm:w-40 text-foreground placeholder:text-muted-foreground"
+                    style={{ fontSize: '1rem', background: 'transparent', border: 'none', outline: 'none', width: '120px', color: 'var(--md-on-surface)' }}
                   />
                   {matches.length > 0 && (
-                    <>
-                      <span className="text-xs whitespace-nowrap text-muted-foreground">
+                    <span slot="trailing" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                      <span className="text-xs whitespace-nowrap text-muted-foreground" style={{ marginRight: 4 }}>
                         {currentMatchIndex + 1}/{matches.length}
                       </span>
-                      <div className="flex gap-1">
-                        <button
-                          onClick={() => navigateMatch("prev")}
-                          className="p-1 rounded hover:bg-secondary"
-                          aria-label="Previous match"
-                        >
-                          <ChevronUp className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => navigateMatch("next")}
-                          className="p-1 rounded hover:bg-secondary"
-                          aria-label="Next match"
-                        >
-                          <ChevronDown className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </>
+                      <button
+                        onClick={() => navigateMatch("prev")}
+                        style={{ background: 'none', border: 'none', padding: 2, borderRadius: 4, cursor: 'pointer' }}
+                        aria-label="Previous match"
+                      >
+                        <MaterialIcon name="chevron_left" size={18} />
+                      </button>
+                      <button
+                        onClick={() => navigateMatch("next")}
+                        style={{ background: 'none', border: 'none', padding: 2, borderRadius: 4, cursor: 'pointer' }}
+                        aria-label="Next match"
+                      >
+                        <MaterialIcon name="chevron_right" size={18} />
+                      </button>
+                    </span>
                   )}
-                </div>
+                </m3e-search-bar>
               </motion.div>
             )}
           </AnimatePresence>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-3 rounded-lg flex items-center justify-center shadow-lg transition-colors border-none text-foreground"
-            style={{ backgroundColor: 'var(--md-surface-container, hsl(var(--card)))' }}
+            className="p-3 rounded-lg flex items-center justify-center shadow-lg transition-colors border-none text-foreground outline outline-2 outline-[var(--md-outline,#79747E)]"
+            style={{ backgroundColor: 'var(--md-surface, #18181b)' }}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {isOpen ? <MaterialIcon name="x" size={20} /> : <MaterialIcon name="menu" size={20} />}
           </button>
         </div>
       </div>

@@ -1,106 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@plugin "tailwindcss-animate";
-
-:root {
-  --primary: 142 71% 45%; 
-  --primary-foreground: 142 71% 98%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-  --radius: 1.25rem;
-
-  --background: 142 15% 5%;
-  --foreground: 142 10% 98%;
-  --card: 142 12% 14%;
-  --card-foreground: 142 10% 98%;
-  --popover: 142 12% 8%;
-  --popover-foreground: 142 10% 98%;
-  --secondary: 142 20% 12%;
-  --secondary-foreground: 142 10% 95%;
-  --muted: 142 15% 10%;
-  --muted-foreground: 142 10% 65%;
-  --accent: 142 30% 15%;
-  --accent-foreground: 142 100% 70%; 
-  --border: 142 20% 15%;
-  --input: 142 15% 10%;
-  --ring: 142 71% 45%;
-
-  --color-primary: var(--md-primary, hsl(142 71% 45%));
-  --color-background: var(--md-background, hsl(142 15% 5%));
-  --color-surface: var(--md-surface, hsl(142 12% 8%));
+.navbar-icon {
+  vertical-align: middle;
+  display: inline-flex;
+  position: relative;
+  top: -8px;
 }
 
-.dark {
-  --background: 142 15% 5%;
-  --foreground: 142 10% 98%;
-  --card: 142 12% 10%;
+:root, m3e-theme {
+  --md-background: var(--md-sys-color-background);
+  --md-on-background: var(--md-sys-color-on-background);
+  --md-surface: var(--md-sys-color-surface);
+  --md-on-surface: var(--md-sys-color-on-surface);
+  --md-primary: var(--md-sys-color-primary);
+  --md-on-primary: var(--md-sys-color-on-primary);
+  --md-tertiary: var(--md-sys-color-tertiary);
+  --md-on-tertiary: var(--md-sys-color-on-tertiary);
+
+}
+@keyframes mobile-nav-drawer {
+  from { max-height: 0; opacity: 0; }
+  to { max-height: 500px; opacity: 1; }
 }
 
-.light {
-  --background: 142 30% 98%;
-  --foreground: 142 50% 5%;
-  --card: 142 25% 97%;
-  --card-foreground: 142 50% 5%;
-  --popover: 142 25% 96%;
-  --popover-foreground: 142 50% 5%;
-  --secondary: 142 30% 92%;
-  --secondary-foreground: 142 50% 10%;
-  --muted: 142 20% 90%;
-  --muted-foreground: 142 30% 25%;
-  --accent: 142 40% 85%;
-  --accent-foreground: 142 100% 30%;
-  --border: 142 25% 85%;
-  --input: 142 20% 90%;
-  --ring: 142 71% 45%;
-}
-
-@theme inline {
-  --font-sans: "Roboto", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --color-background: var(--md-background, hsl(var(--background)));
-  --color-foreground: var(--md-on-background, hsl(var(--foreground)));
-  --color-card: var(--md-surface-container, hsl(var(--card)));
-  --color-card-foreground: var(--md-on-surface, hsl(var(--card-foreground)));
-  --color-primary: var(--md-primary, hsl(var(--primary)));
-  --color-primary-foreground: var(--md-on-primary, hsl(var(--primary-foreground)));
-  --color-secondary: var(--md-secondary, hsl(var(--secondary)));
-  --color-secondary-foreground: var(--md-on-secondary, hsl(var(--secondary-foreground)));
-  --color-accent: var(--md-tertiary, hsl(var(--accent)));
-  --color-accent-foreground: var(--md-on-tertiary, hsl(var(--accent-foreground)));
-  --color-destructive: var(--md-error, hsl(var(--destructive)));
-  --color-destructive-foreground: var(--md-on-error, hsl(var(--destructive-foreground)));
-  --color-border: var(--md-outline, hsl(var(--border)));
-  --color-input: var(--md-surface-variant, hsl(var(--input)));
-  --color-ring: var(--md-primary, hsl(var(--ring)));
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 0.5rem);
-  --radius-sm: calc(var(--radius) - 0.75rem);
+.animate-mobile-nav-drawer {
+  animation: mobile-nav-drawer 0.25s cubic-bezier(0.4,0,0.2,1);
+  overflow: hidden;
 }
 
 .material-card {
-  @apply rounded-[3rem] p-10 shadow-none border-none transition-colors duration-300;
-  background-color: hsl(var(--card)) !important;
-  color: var(--md-on-surface, hsl(var(--card-foreground))) !important;
+  background-color: var(--md-surface-container);
+  color: var(--md-on-surface);
 }
 
 .material-button {
-  @apply rounded-full px-10 py-4 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] font-black;
-  background-color: var(--md-primary, hsl(var(--primary))) !important;
-  color: var(--md-on-primary, hsl(var(--primary-foreground))) !important;
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
 }
 
-:root, .dark, .light {
-  background-color: var(--md-background, hsl(var(--background))) !important;
-  color: var(--md-on-background, hsl(var(--foreground))) !important;
+html {
+  background: #18181b !important;
 }
-
 body {
-  background-color: var(--md-background, hsl(var(--background))) !important;
+  font-family: 'Roboto', ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial;
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #18181b !important;
+}
+
+html, body {
+  background: none;
 }
 
 .material-icon-container {
-  @apply bg-accent/5 p-8 rounded-full flex items-center justify-center;
+  background-color: color-mix(in srgb, var(--md-tertiary, transparent) 5%, transparent);
 }
 
 @layer utilities {
@@ -108,7 +67,7 @@ body {
     text-shadow: 0 0 15px hsla(145, 100%, 39%, 0.3);
   }
   .glass-panel {
-    @apply bg-accent/5 backdrop-blur-md border-none;
+    background-color: color-mix(in srgb, var(--md-surface, transparent) 8%, transparent);
   }
   .grid-bg {
     background-image: linear-gradient(to right, hsla(145, 100%, 39%, 0.04) 1px, transparent 1px),
@@ -116,8 +75,29 @@ body {
     background-size: 40px 40px;
     mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
   }
-  
+}
+
+@media (prefers-reduced-motion: no-preference) {
   .animated-gradient-bg {
-    display: none;
+    display: block;
+    animation: gradientMove 8s linear infinite alternate;
+  }
+  .sheet-content[data-state="open"] {
+    animation: slide-in-from-bottom 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .sheet-content[data-state="closed"] {
+    animation: slide-out-to-bottom 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+  @keyframes slide-in-from-bottom {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes slide-out-to-bottom {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(100%); opacity: 0; }
   }
 }

@@ -1,19 +1,30 @@
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { AliucordLogo } from "./AliucordLogo";
 
-const MaterialIcon = ({ name, size = 24, className = "" }: { name: string, size?: number, className?: string }) => (
-  <span 
-    className={`material-symbols-rounded ${className}`} 
-    style={{ 
-      fontSize: size, 
-      fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24",
-      userSelect: 'none'
-    }}
-  >
-    {name}
-  </span>
-);
+
+import { motion } from "framer-motion";
+import { AliucordLogo } from "./AliucordLogo";
+import { useEffect, useRef } from "react";
+import MaterialIcon from "./MaterialIcon";
+
+
+function M3EButtonWithIcon({ icon, label, href, variant = "filled", size = "medium", target, rel, trailingIcon, style, ...rest }) {
+
+
+  return (
+    <m3e-button
+      variant={variant}
+      size={size}
+      href={href}
+      target={target}
+      rel={rel}
+      style={style}
+      {...rest}
+    >
+      {icon && <m3e-icon slot="icon">{icon}</m3e-icon>}
+      {label}
+      {trailingIcon && <m3e-icon slot="trailing-icon">{trailingIcon}</m3e-icon>}
+    </m3e-button>
+  );
+}
 
 export function Hero() {
   return (
@@ -25,17 +36,8 @@ export function Hero() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="flex justify-center mb-6 md:mb-8"
         >
-          <AliucordLogo className="w-48 h-48 md:w-64 md:h-64" animated />
+          <AliucordLogo className="w-48 h-48 md:w-64 md:h-64" animated={false} />
         </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-4xl md:text-7xl font-bold tracking-tighter mb-2 leading-[0.9]"
-        >
-          Aliucord
-        </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -43,7 +45,7 @@ export function Hero() {
           transition={{ delay: 0.2 }}
           className="text-xl md:text-2xl text-foreground/60 max-w-3xl mx-auto mb-8 font-medium leading-snug"
         >
-          A mod for the legacy Discord Android App
+          <span style={{ fontSize: '1.5rem', fontWeight: 500, fontFamily: 'Roboto, ui-sans-serif, system-ui' }}>A mod for the legacy Discord Android App</span>
         </motion.p>
 
         <motion.div
@@ -52,18 +54,25 @@ export function Hero() {
           transition={{ delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-6"
         >
-          <Button size="lg" asChild className="h-16 px-10 text-lg rounded-full" style={{ backgroundColor: 'hsl(var(--primary))', color: 'hsl(var(--primary-foreground))' }}>
-            <a href="https://github.com/Aliucord/AliucordManager/releases/latest" target="_blank" rel="noreferrer">
-              <MaterialIcon name="download" size={24} className="mr-3" />
-              Download Manager
-            </a>
-          </Button>
-          <Button size="lg" asChild className="h-16 px-10 text-lg rounded-full" style={{ backgroundColor: 'hsl(var(--card))', color: 'hsl(var(--card-foreground))' }}>
-            <a href="https://github.com/Aliucord/Aliucord#-installation" target="_blank" rel="noreferrer">
-              <MaterialIcon name="book" size={24} className="mr-3" />
-              Guide
-            </a>
-          </Button>
+          <M3EButtonWithIcon
+            icon={<MaterialIcon name="download" />}
+            label="Download Manager"
+            href="https://github.com/Aliucord/AliucordManager/releases/latest"
+            variant="filled"
+            size="medium"
+            target="_blank"
+            rel="noreferrer"
+            shape="square"
+          />
+          <M3EButtonWithIcon
+            icon={<MaterialIcon name="book" />}
+            label="Guide"
+            href="https://github.com/Aliucord/Aliucord#-installation"
+            variant="tonal"
+            size="medium"
+            target="_blank"
+            rel="noreferrer"
+          />
         </motion.div>
       </div>
     </section>

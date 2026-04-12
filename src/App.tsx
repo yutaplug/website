@@ -1,3 +1,4 @@
+
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -10,21 +11,27 @@ import Plugins from "@/pages/Plugins";
 import Themes from "@/pages/Themes";
 import FAQ from "@/pages/FAQ";
 import Documentation from "@/pages/Documentation";
-import About from "@/pages/About";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
-    <div className="flex flex-col min-h-screen bg-transparent">
+    <div
+      className="flex flex-col min-h-screen"
+      style={{
+        backgroundColor: 'var(--md-background)',
+        color: 'var(--md-on-background)',
+        minHeight: '100vh',
+        minWidth: 0,
+      }}
+    >
       <Navbar />
-      <main className="flex-grow bg-transparent">
+      <main className="flex-grow">
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/plugins" component={Plugins} />
           <Route path="/themes" component={Themes} />
           <Route path="/faq" component={FAQ} />
           <Route path="/documentation" component={Documentation} />
-          <Route path="/about" component={About} />
           <Route component={NotFound} />
         </Switch>
       </main>

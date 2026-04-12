@@ -1,3 +1,7 @@
+import React from "react";
+import MaterialIcon from "./MaterialIcon";
+import "@m3e/web/icon-button";
+import "@m3e/web/chips";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
@@ -22,6 +26,30 @@ export function ThemePreviewCarousel() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
+  // Refs for dynamic chips
+  const chipRefs = React.useRef<(Element | null)[]>([]);
+
+  // Attach click handlers after render
+  React.useEffect(() => {
+    if (!api || count === 0) return;
+    // Store handlers so we can remove them
+    const handlers: Array<() => void> = [];
+    chipRefs.current.forEach((el, index) => {
+      if (el) {
+        const handler = () => api.scrollTo(index);
+        handlers[index] = handler;
+        el.addEventListener('click', handler);
+      }
+    });
+    // Clean up all listeners on unmount or change
+    return () => {
+      chipRefs.current.forEach((el, index) => {
+        if (el && handlers[index]) {
+          el.removeEventListener('click', handlers[index]);
+        }
+      });
+    };
+  }, [api, count, current]);
 
   useEffect(() => {
     if (!api) {
@@ -68,7 +96,7 @@ export function ThemePreviewCarousel() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-6xl font-black tracking-tight">Themes</h2>
+          <h2 className="text-4xl md:text-6xl font-semibold tracking-tight">Themes</h2>
         </motion.div>
 
         <motion.div
@@ -79,42 +107,52 @@ export function ThemePreviewCarousel() {
           className="px-10 md:px-14"
         >
           <div className="relative flex items-center w-full">
-            <Carousel setApi={setApi} opts={{ loop: true, align: "start" }} className="w-full">
-              <CarouselPrevious className="-left-6 md:-left-10 absolute z-10 bg-card/90 border-border hover:bg-card" />
-              <CarouselContent>
-                {THEME_PREVIEWS.map((preview) => (
-                  <CarouselItem key={preview.src} className="basis-full">
-                    <img
-                      src={preview.src}
-                      alt={preview.name}
-                      loading="lazy"
-                      className="w-full h-auto max-h-[60vh] md:max-h-[70vh] object-cover object-center transition-transform duration-500 hover:scale-[1.01]"
-                      style={{ display: 'block', borderRadius: 0, margin: 0, padding: 0 }}
-                    />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselNext className="-right-6 md:-right-10 absolute z-10 bg-card/90 border-border hover:bg-card" />
-            </Carousel>
+            <div className="relative w-full">
+              <Carousel setApi={setApi} opts={{ loop: true, align: "start" }} className="w-full">
+                <CarouselContent>
+                  {THEME_PREVIEWS.map((preview) => (
+                    <CarouselItem key={preview.src} className="basis-full">
+                      <img
+                        src={preview.src}
+                        alt={preview.name}
+                        loading="lazy"
+                        className="w-full h-auto max-h-[60vh] md:max-h-[70vh] object-cover object-center transition-transform duration-500 hover:scale-[1.01]"
+                        style={{ display: 'block', borderRadius: 0, margin: 0, padding: 0 }}
+                      />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </div>
           </div>
 
           {count > 0 && (
-            <div className="mt-6 flex items-center justify-center gap-2">
-              {Array.from({ length: count }).map((_, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  aria-label={`Go to preview ${index + 1}`}
-                  onClick={() => api?.scrollTo(index)}
-                  className={
-                    index === current
-                      ? "h-2.5 w-7 rounded-full bg-primary transition-all"
-                      : "h-2.5 w-2.5 rounded-full bg-gray-400/80 border border-gray-500 shadow-sm transition-all"
-                  }
-                  style={index !== current ? { opacity: 1 } : {}}
-                />
-              ))}
-            </div>
+            <>
+              <m3e-chip-set className="mt-6 flex flex-row items-center justify-center gap-1">
+                {Array.from({ length: count }).map((_, index) => (
+                  <m3e-chip
+                    key={index}
+                    ref={el => (chipRefs.current[index] = el as HTMLElement | null)}
+                    variant={index === current ? "filled" : "tonal"}
+                    size="small"
+                    aria-label={`Go to preview ${index + 1}`}
+                    style={{
+                      padding: 0,
+                      minWidth: 12,
+                      width: 12,
+                      height: 12,
+                      fontSize: 0,
+                      borderRadius: 9999,
+                      opacity: index === current ? 1 : 0.7,
+                      margin: 2,
+                      background: index === current ? 'var(--md-primary, #00C853)' : 'var(--md-surface-variant, #e0e0e0)',
+                      border: index === current ? 'none' : '1.5px solid var(--md-outline, #bdbdbd)',
+                      transition: 'background 0.2s, border 0.2s, opacity 0.2s',
+                    }}
+                  />
+                ))}
+              </m3e-chip-set>
+            </>
           )}
         </motion.div>
 
@@ -126,9 +164,9 @@ export function ThemePreviewCarousel() {
           className="text-center mt-10"
         >
           <Link href="/themes">
-            <span className="material-button inline-flex items-center gap-2 cursor-pointer">
+            <m3e-button type="button" variant="filled" color="primary" style={{ fontSize: '1.1rem', padding: '0 2.2em' }}>
               Explore all themes
-            </span>
+            </m3e-button>
           </Link>
         </motion.div>
       </div>
