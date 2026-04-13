@@ -3,7 +3,7 @@
 - 🚧: Still in development or beta
 - ⚠️: Maintenance mode (unusable/broken or can compromise your account)
 
-**Note:** To install the plugins from here you need to click the plugin name, it will download the plugin .zip, now just move it to the `Aliucord/plugins` folder using a file manager & restart Aliucord in case it was open.
+**Note:** To install the plugins from here you need to click the plugin name, it will download the plugin `.zip`, now just move it to the `Aliucord/plugins` folder using a file manager & restart Aliucord in case it was open.
 
 ## Plugins
 
@@ -62,7 +62,7 @@
 
 **Notes:**
 - This method is used for core features that are not merged yet.
-- You can't use multiple `.zip's` at once, you'll need to decide which features you prefer.
+- You can't use multiple `.zip`'s at once, you'll need to decide which features you prefer.
 
 **How to use Aliucord from storage**
 
