@@ -107,13 +107,25 @@ export default function Docs() {
                         <h3 className="text-xl font-medium mt-4 mb-2 text-foreground" style={{ fontSize: '1.125rem' }} {...props} />
                       ),
                       ul: ({ node, ...props }) => (
-                        <ul className="list-disc list-inside mb-3 space-y-1" {...props} />
+                        <ul
+                          className="list-disc list-inside mb-2"
+                          style={{ marginTop: '0.5em', marginBottom: '0.5em', paddingLeft: '1.2em', gap: 0 }}
+                          {...props}
+                        />
                       ),
                       ol: ({ node, ...props }) => (
-                        <ol className="list-decimal list-inside mb-3 space-y-1" {...props} />
+                        <ol
+                          className="list-decimal list-inside mb-2"
+                          style={{ marginTop: '0.5em', marginBottom: '0.5em', paddingLeft: '1.2em', gap: 0 }}
+                          {...props}
+                        />
                       ),
                       li: ({ node, ...props }) => (
-                        <li className="text-muted-foreground" {...props} />
+                        <li
+                          className="text-muted-foreground"
+                          style={{ margin: '0.1em 0', paddingLeft: '0.2em' }}
+                          {...props}
+                        />
                       ),
                       a: ({ node, ...props }) => (
                         <a
@@ -136,10 +148,10 @@ export default function Docs() {
                             {...props}
                             style={{
                               backgroundColor: 'color-mix(in srgb, var(--md-primary) 10%, transparent)',
-                              padding: '0.1em 0.4em',
-                              borderRadius: '0.25em',
+                              padding: '0.05em 0.25em',
+                              borderRadius: '0.18em',
                               fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace',
-                              fontSize: '0.85em',
+                              fontSize: '0.82em',
                               color: 'var(--md-primary)',
                               border: '1px solid var(--md-primary)'
                             }}
@@ -151,11 +163,11 @@ export default function Docs() {
                               position: 'relative',
                               background: 'color-mix(in srgb, var(--md-primary) 7%, var(--md-surface) 93%)',
                               color: 'var(--md-primary)',
-                              borderRadius: '0.5em',
+                              borderRadius: '0.35em',
                               fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace',
-                              fontSize: '0.95em',
-                              padding: '0.5em 1.2em',
-                              margin: '0.25em 0',
+                              fontSize: '0.89em',
+                              padding: '0.25em 0.7em',
+                              margin: '0.15em 0',
                               verticalAlign: 'middle',
                               minWidth: 0,
                               maxWidth: '100%',
@@ -221,11 +233,13 @@ export default function Docs() {
                           {...props}
                           style={{
                             backgroundColor: 'color-mix(in srgb, var(--md-on-surface) 40%, transparent)',
-                            padding: '1rem',
-                            borderRadius: '0.5rem',
+                            padding: '0.5rem 0.7rem',
+                            borderRadius: '0.35rem',
                             overflowX: 'auto',
-                            marginBottom: '0.75rem',
-                            color: 'var(--md-on-surface)'
+                            marginBottom: '0.5rem',
+                            color: 'var(--md-on-surface)',
+                            fontSize: '0.97em',
+                            lineHeight: 1.4
                           }}
                         />
                       ),
