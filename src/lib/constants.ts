@@ -35,7 +35,7 @@ export const FEATURES = [
   {
     iconName: "update",
     title: "Modernized",
-    description: 'Many of the new Discord features have been backported. A list can be found <a href="/documentation?section=backports" style="color: var(--md-primary); text-decoration: underline; font-weight: 500;">here</a>',
+    description: 'Many of the new Discord features have been backported. A list can be found <a href="/documentation#backports" style="color: var(--md-primary); text-decoration: underline; font-weight: 500;">here</a>',
   },
 ];
 
